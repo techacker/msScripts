@@ -1,5 +1,6 @@
 // Objective Test
 
+/** @type {*} */
 let HeaderObj = {}
 let shxDept = ['1-SW Engineering SHX/SWE','6-ADAS SHX/ADX','2-SW Projects  SHX/ADPM','CCS']
 let nnHeaders = ["Year","Name","Joining","Dept","Country"]
@@ -25,6 +26,12 @@ nnDataArray.forEach(rec => {
     hiringDataArray.push([changeYear(targetYear),candName,startDate,changeEntity(entity),changeCountries(country)])
 })
 
+/**
+ *
+ *
+ * @param {*} entity
+ * @return {*} 
+ */
 function changeEntity(entity) {
     // Convert Entities to Short form
     if (entity == '1-SW Engineering SHX/SWE') {
@@ -47,6 +54,12 @@ function changeEntity(entity) {
     return entity
 }
 
+/**
+ *
+ *
+ * @param {*} targetYear
+ * @return {*} 
+ */
 function changeYear(targetYear) {
     // Target Year 2021, 2022 and 2023
     if (targetYear == '') {
@@ -55,6 +68,12 @@ function changeYear(targetYear) {
     return targetYear
 }
 
+/**
+ *
+ *
+ * @param {*} country
+ * @return {*} 
+ */
 function changeCountries(country) {
     // Convert countries names from their symbols
     if (country.trim() == "CH") {
@@ -79,6 +98,11 @@ function changeCountries(country) {
     return country
 }
 
+/**
+ *
+ *
+ * @param {*} internal
+ */
 function changeIntExt(internal) {
     // Segregate internal and external candidates
     if (internal == "") {
@@ -88,6 +112,12 @@ function changeIntExt(internal) {
     }
 }
 
+/**
+ *
+ *
+ * @param {*} serial
+ * @return {*} 
+ */
 function ExcelDateToJSDate(serial) {
     var utc_days  = Math.floor(serial - 25569);
     var utc_value = utc_days * 86400;                                        
@@ -107,6 +137,11 @@ function ExcelDateToJSDate(serial) {
     return new Date(date_info.getFullYear(), date_info.getMonth(), date_info.getDate(), hours, minutes, seconds);
  }
 
+/**
+ *
+ *
+ * @param {*} headcount
+ */
 function calculatePerYearHC(headcount) {
     // Get Total HC posted and filled in which country
     if (headcount !== "") {
@@ -253,6 +288,11 @@ function calculatePerYearHC(headcount) {
     }
 }
 
+/**
+ *
+ *
+ * @param {*} headcount
+ */
 function calculateRegionalData(headcount) {
     // Get regional data
     if (headcount !== "") {
