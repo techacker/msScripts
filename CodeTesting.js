@@ -304,3 +304,28 @@ function calculateRegionalData(headcount) {
 }
 
 console.log(hiringDataArray)
+
+/*
+function main(workbook: ExcelScript.Workbook): EventData[] {
+    let table = workbook.getWorksheet("Sheet1").getTables()[0];
+    let range = table.getRangeBetweenHeaderAndTotal();
+    let rows = range.getValues();
+    let records: EventData[] = [];
+
+    for (let row of rows) {
+        let [JobTitle, YearsOfExperience, EmpID] = row;
+        records.push({
+            JobTitle: JobTitle as string,
+    YearsOfExperience: YearsOfExperience as number,
+    EmpID: EmpID as number
+        })
+    }
+    console.log(JSON.stringify(records));
+    return records;
+}
+interface EventData {
+    JobTitle: string
+    YearsOfExperience: number
+    EmpID: number
+}
+*/
