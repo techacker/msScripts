@@ -46,7 +46,7 @@ function main(workbook: ExcelScript.Workbook) {
       let reqStatus:string = HeaderObj["Req Status"]
       let adpREQ:string = HeaderObj["ADP Req"]
       let candidateName:string = HeaderObj["Selected Candidate"]
-      let startDate:Date = HeaderObj["Start Date"]
+      let startDate:string = HeaderObj["Start Date"]
       let offerMade:string = HeaderObj["Offer Extended"]
       let offerPending:string = HeaderObj["Offer to be made"]
       let priority:string = HeaderObj["Top Priority"]
@@ -145,7 +145,7 @@ function main(workbook: ExcelScript.Workbook) {
   }
   
   // Convert non-US Date format to US Date format
-  function changeDate(startDate:string | number):Date {
+  function changeDate(startDate:string | number):string {
       if (typeof(startDate) === "string") {
           let dateSplit = startDate.split('/')
           if (dateSplit.length > 1) {
@@ -186,6 +186,7 @@ function main(workbook: ExcelScript.Workbook) {
       return targetYear
   }
   
+  /*
   function getRegionalData() {
       // Get Total HC posted and filled in which country
       if (headcount !== "") {
@@ -379,3 +380,4 @@ function main(workbook: ExcelScript.Workbook) {
           }
       }
   }
+  */
