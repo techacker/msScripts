@@ -4,7 +4,7 @@
 let HeaderObj = {}
 let shxDept = ['1-SW Engineering SHX/SWE','6-ADAS SHX/ADX','2-SW Projects  SHX/ADPM','CCS']
 let nnHeaders = ["Year","Name","Joining","Dept","Country"]
-let nnDataArray = [['2021','Anurag','01/18/2022','1-SW Engineering SHX/SWE','NA'],['','Shipra','09/18/2022','2-SW Projects  SHX/ADPM','BR']]
+let nnDataArray = [['2021','Anurag','08/01/2023','1-SW Engineering SHX/SWE','NA'],['','Shipra','44982','2-SW Projects  SHX/ADPM','BR']]
 let hiringDataArray = []
 
 nnHeaders.forEach((item, ind) => {
@@ -23,7 +23,7 @@ nnDataArray.forEach(rec => {
     let country = HeaderObj['Country']
 
     //console.log(changeEntity(entity))
-    hiringDataArray.push([changeYear(targetYear),candName,startDate,changeEntity(entity),changeCountries(country)])
+    hiringDataArray.push([changeYear(targetYear),candName,changeDate(startDate),changeEntity(entity),changeCountries(country)])
 })
 
 /**
@@ -66,6 +66,39 @@ function changeYear(targetYear) {
         targetYear = '2023'
     }
     return targetYear
+}
+
+/**
+ *
+ *
+ * @param {*} startDate
+ * @return {*} 
+ */
+function changeDate(startDate) {
+    let dateSplit = startDate.split('/')
+    if (dateSplit.length > 1) {
+        // Convert non-US format to US Date format
+        let yyyy = ""
+        // Convert Year part to 2022, 2023 etc.
+        if (dateSplit[2] !== undefined) {
+            if (dateSplit[2].length == 2) {
+                yyyy = '20' + dateSplit[2]
+            } else {
+                yyyy = dateSplit[2]
+            }
+        }
+        // Check for date being in US format already, if not put month first
+        if (Number(dateSplit[1]) > 12) {
+            startDate = parseInt(dateSplit[0]) + '/' + parseInt(dateSplit[1]) + '/' + yyyy
+        } else {
+            startDate = parseInt(dateSplit[1]) + '/' + parseInt(dateSplit[0]) + '/' + yyyy
+        } 
+    }
+    else {
+        // One liner function to convert Excel Serials to US Date format
+        startDate = new Date(Date.UTC(0,0,startDate-1)).toLocaleDateString('en-US')
+    }
+    return startDate
 }
 
 /**
@@ -135,6 +168,7 @@ function ExcelDateToJSDate(serial) {
     var minutes = Math.floor(total_seconds / 60) % 60;
  
     return new Date(date_info.getFullYear(), date_info.getMonth(), date_info.getDate(), hours, minutes, seconds);
+    
  }
 
 /**
