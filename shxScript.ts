@@ -189,6 +189,7 @@ function main(workbook: ExcelScript.Workbook) {
   /*
   function getRegionalData() {
       // Get Total HC posted and filled in which country
+      let [numGlobal, numEMEA, numPL, numCH, numD, numFR, numIN, numIT, numNA, numSA, numMO, numTotal, numPLFilled, numCHFilled, numDFilled, numFRFilled, numINFilled, numITFilled, numNAFilled, numSAFilled, numMOFilled, numLATAMFilled, num2021, num21CHFilled, num21DFilled, num21FRFilled, num21INFilled, num21ITFilled, num21NAFilled, num21CHPosted, num21DPosted, num21FRPosted, num21INPosted, num21ITPosted, num21NAPosted, num21EMEAPosted, num21Filled, num2022, num22PLFilled, num22CHFilled, num22DFilled, num22FRFilled, num22INFilled, num22ITFilled, num22NAFilled, num22SAFilled, num22MOFilled, num22PLPosted, num22CHPosted, num22DPosted, num22FRPosted, num22INPosted, num22ITPosted, num22NAPosted, num22SAPosted, num22MOPosted, num22EMEAPosted, num22Filled, num2023, num23PLFilled, num23CHFilled, num23DFilled, num23FRFilled, num23INFilled, num23ITFilled, num23NAFilled, num23SAFilled, num23MOFilled, num23PLPosted, num23CHPosted, num23DPosted, num23FRPosted, num23INPosted, num23ITPosted, num23NAPosted, num23SAPosted, num23MOPosted, num23EMEAPosted, num23Filled] = countsArray
       if (headcount !== "") {
           numTotal += parseInt(headcount)
           if (targetYear == "2021") {
