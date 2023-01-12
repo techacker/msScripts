@@ -4,13 +4,13 @@ function main(workbook: ExcelScript.Workbook) {
     let rowCount = repSS.getUsedRange().getRowCount()
     let lastRan:string = new Date().toLocaleDateString()
     let repHeaderRange = repSS.getRangeByIndexes(0, 0, 1, colCount).getValues()[0] 
-    let repDataRange = repSS.getRangeByIndexes(1, 0, rowCount -1, colCount).getValues()  
+    let repDataRange = repSS.getRangeByIndexes(1, 0, rowCount-1, colCount).getValues()  // rowCount -1
 
     // Stats Sheet Info
-    let statSS = workbook.getWorksheet('2023Stats')
+    let statSS = workbook.getWorksheet('Stats')
     let statLC = statSS.getUsedRange().getColumnCount()
     let statLR = statSS.getUsedRange().getRowCount()
-    let statDataRange = statSS.getRangeByIndexes(0,21,1,statLC)
+    let statDataRange = statSS.getRangeByIndexes(0,0,statLR-2,statLC)
     
     let countsArray:number[] = []
     let [numGlobal=0, numEMEA=0, numPL=0, numCH=0, numD=0, numFR=0, numIN=0, numIT=0, numNA=0, numSA=0, numMO=0, numTotal=0, numFilled=0, numActive=0, numHCC=0, numLCC=0] = countsArray
@@ -24,6 +24,7 @@ function main(workbook: ExcelScript.Workbook) {
     let HeaderObj = {}
     let statData:(string|number)[][] = []
     
+    // Calculate 2023 and earlier stats
     repDataRange.forEach(row => {
         repHeaderRange.forEach((heading:string, colInd:number) => {
             HeaderObj[heading] = row[colInd]
@@ -45,7 +46,7 @@ function main(workbook: ExcelScript.Workbook) {
         let brazil:boolean = HeaderObj["SA"]
         let morocco:boolean = HeaderObj["MO"]
         let candidateName:string = HeaderObj["Selected Candidate"]
-        let startDate:string = HeaderObj["Start Date (US Format)"]
+        let startDate:(number|string) = HeaderObj["Start Date (US Format)"]
         let offerMade:string = HeaderObj["Offer Made"]
         let offerPending:string = HeaderObj["Offer Pending"]
         let priority:string = HeaderObj["Top Priority"]
@@ -115,7 +116,7 @@ function main(workbook: ExcelScript.Workbook) {
             }
         }
     })
-    console.log(num2022)
+    
     // Upto 2022 Calculation Steps
     num22EMEAPosted = num22DPosted + num22FRPosted + num22ITPosted
     num22EMEAFilled = num22DFilled + num22FRFilled + num22ITFilled
@@ -157,12 +158,12 @@ function main(workbook: ExcelScript.Workbook) {
     percHCC = numFilled > 0 ? numHCC/numFilled : 0
     percLCC = numFilled > 0 ? numLCC/numFilled : 0
 
-    statData.push([lastRan, num2022, num22CHPosted, num22DPosted, num22FRPosted, num22ITPosted, num22EMEAPosted,num22INPosted, num22NAPosted, num22SAPosted, num22PLPosted, num22MOPosted, num22Active, num22Filled,num22CHFilled, num22DFilled, num22FRFilled, num22ITFilled, num22EMEAFilled, num22INFilled, num22NAFilled,num22SAFilled, num22PLFilled, num22MOFilled, perc22HCC, perc22LCC,
-        num2023, num23CHPosted, num23DPosted, num23FRPosted, num23ITPosted, num23EMEAPosted, num23INPosted,num23NAPosted, num23SAPosted, num23PLPosted, num23MOPosted, num23Active,
-        num23Filled, num23CHFilled, num23DFilled, num23FRFilled, num23ITFilled, num23EMEAFilled, num23INFilled, num23NAFilled, num23SAFilled, num23PLFilled, num23MOFilled, perc23HCC, perc23LCC, 
-        numTotal, numEMEA, numIN, numNA, numSA, numPL, numMO, numActive, numFilled, numEMEAFilled, numINFilled, numNAFilled,numSAFilled, numPLFilled, numMOFilled, percHCC, percLCC])
-
-    //statSS.getRangeByIndexes(statLR,0,statData.length,statData[0].length).setValues(statData)
+    // Create the array to be posted as values
+    statData.push([lastRan, num2023, num23CHPosted, num23DPosted, num23FRPosted, num23ITPosted, num23EMEAPosted, num23INPosted,num23NAPosted, num23SAPosted, num23PLPosted, num23MOPosted, num23Active,
+        num23Filled, num23CHFilled, num23DFilled, num23FRFilled, num23ITFilled, num23EMEAFilled, num23INFilled, num23NAFilled, num23SAFilled, num23PLFilled, num23MOFilled, perc23HCC, perc23LCC, num2022, num22CHPosted, num22DPosted, num22FRPosted, num22ITPosted, num22EMEAPosted,num22INPosted, num22NAPosted, num22SAPosted, num22PLPosted, num22MOPosted, num22Active, num22Filled,num22CHFilled, num22DFilled, num22FRFilled, num22ITFilled, num22EMEAFilled, num22INFilled, num22NAFilled,num22SAFilled, num22PLFilled, num22MOFilled, perc22HCC, perc22LCC, numTotal, numEMEA, numIN, numNA, numSA, numPL, numMO, numActive, numFilled, numEMEAFilled, numINFilled, numNAFilled,numSAFilled, numPLFilled, numMOFilled, percHCC, percLCC])
+    
+    // Write array values to the 2023 Stats sheet
+    statSS.getRangeByIndexes(statLR,0,statData.length,statData[0].length).setValues(statData)
 }
 
 function calculatePosted(china:boolean,germany:boolean,france:boolean,india:boolean,italy:boolean,usa:boolean,brazil:boolean,poland:boolean,morocco:boolean,headcount:number):number[] {
